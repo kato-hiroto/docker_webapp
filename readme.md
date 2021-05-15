@@ -1,6 +1,17 @@
 # 環境に強そうなwebサイト作成
 
+## 概要
+
+1. `docker_webapp_setting.sh` を実行
+2. `sudo docker-compose up` でコンテナ等を起動
+3. `curl https://localweb.test -k` でSSL接続の確認
+
 ## コマンド
+
+### 旧dockerのアンインストール
+```
+sudo yum remove docker docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotate docker-engine
+```
 
 ### dockerのリポジトリ設定
 ```
@@ -10,7 +21,7 @@ sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/dock
 
 ### dockerのインストール
 ```
-sudo yum install docker-ce docker-ce-cli containerd.io
+sudo yum install -y docker-ce docker-ce-cli containerd.io
 ```
 
 ### dockerの起動
@@ -32,7 +43,8 @@ echo "127.0.0.1   localweb.test" | sudo tee -a /etc/hosts
 
 ### mkdir
 ```
-mkdir docker_webapp && cd "$_"
+mkdir docker_webapp
+cd docker_webapp
 mkdir https-portal-data
 ```
 
@@ -43,7 +55,7 @@ curl -L "https://raw.githubusercontent.com/kato-hiroto/docker_webapp/master/dock
 
 ### docker-compose.ymlの起動
 ```
-docker-compose up -d
+sudo docker-compose up -d
 ```
 
 ### 起動確認
