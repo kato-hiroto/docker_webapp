@@ -1,12 +1,18 @@
-# 環境に強そうなwebサイト作成
+# dockerを利用してhttpsサイト構築
 
-## 概要
+## 目標
+
+なるべく簡単にSSL/TLS接続できるようにする。
+データベースの追加等も楽になるとなおよい。
+（作成・検証中）
+
+## 使い方
 
 1. `docker_webapp_setting.sh` を実行
 2. `sudo docker-compose up` でコンテナ等を起動
 3. `curl https://localweb.test -k` でSSL接続の確認
 
-## コマンド
+## コマンド説明
 
 ### 旧dockerのアンインストール
 ```
@@ -78,3 +84,7 @@ sudo docker-compose down
 - [https-portalでローカルのwebサーバを自己証明書でSSL化するメモ](https://7me.nobiki.com/2020/04/18/docker-https-portal-ssl-certificate-local/)
 - [よく使うcurlコマンドのオプション](https://qiita.com/ryuichi1208/items/e4e1b27ff7d54a66dcd9)
 - [【Docker】docker-composeコマンド早見表](https://qiita.com/beanbeenzou/items/47207bb131ec5a158774)
+- [Nginxによるリバースプロキシの設定方法](https://qiita.com/schwarz471/items/9b44adfbec006eab60b0)
+- [remote_addrとかx-forwarded-forとかx-real-ipとか](https://christina04.hatenablog.com/entry/2016/10/25/190000)
+- [実践編ーDockerを使ってnginxでリバースプロキシを立ててみる](https://qiita.com/zawawahoge/items/d58ab6b746625e8d4457)
+- [dockerでnginx を使ってリバースプロキシをたてる](https://karuta-kayituka.hatenablog.com/entry/2019/06/30/221301)
