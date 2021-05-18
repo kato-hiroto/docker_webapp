@@ -10,10 +10,10 @@ services:
         links:          # コンテナ内の /etc/hosts に追加
             - page1
             - page2
-        ports:          # 左の番号のポートで外部からhttp接続可能
-            - "8080:80"
-        # expose:         # リンクされたサービスのみアクセス可能なポート
-        #     - "80"
+        # ports:          # 左の番号のポートで外部からhttp接続可能
+        #     - "8080:80"
+        expose:         # リンクされたサービスのみアクセス可能なポート
+            - "80"
         volumes:
             - ./reverse-proxy/conf.d:/etc/nginx/conf.d
             - ./reverse-proxy/html:/etc/nginx/html
@@ -32,19 +32,19 @@ services:
         volumes:
             - ./nginx2/html:/usr/share/nginx/html
 
-    # https-portal:
-    #     image: steveltn/https-portal:1
-    #     ports:
-    #         - "80:80"
-    #         - "443:443"
-    #     links:
-    #         - nginx
-    #     restart: always
-    #     environment:
-    #         STAGE: local            # 内部のみ & 自己証明書
-    #         # STAGE: staging          # 自己証明書
-    #         # STAGE: production       # Let's Encryptに証明書登録
-    #         DOMAINS: "localweb.test -> http://nginx:80"     # 左側にドメイン設定
-    #         # FORCE_RENEW: "true"     # 証明書の強制更新
-    #     volumes: 
-    #         - ./https-portal-data:/var/lib/https-portal
+    https-portal:
+        image: steveltn/https-portal:1
+        ports:
+            - "80:80"
+            - "443:443"
+        links:
+            - nginx
+        restart: always
+        environment:
+            STAGE: local            # 内部のみ & 自己証明書
+            # STAGE: staging          # 自己証明書
+            # STAGE: production       # Let's Encryptに証明書登録
+            DOMAINS: "localweb.test -> http://nginx:80"     # 左側にドメイン設定
+            # FORCE_RENEW: "true"     # 証明書の強制更新
+        volumes: 
+            - ./https-portal-data:/var/lib/https-portal
