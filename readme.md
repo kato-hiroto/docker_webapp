@@ -2,9 +2,9 @@
 
 ## 目標
 
-なるべく簡単にSSL/TLS接続できるようにする。
-データベースの追加等も楽になるとなおよい。
-（作成・検証中）
+なるべく簡単にSSL/TLS接続できるようにする。  
+データベースの追加等も楽になるとなおよい。  
+（作成・検証中）  
 
 ## 使い方
 
@@ -61,8 +61,9 @@ curl -L "https://raw.githubusercontent.com/kato-hiroto/docker_webapp/master/dock
 
 ### docker-compose.ymlの起動
 ```
-sudo docker-compose up -d
+sudo docker-compose up
 ```
+`-d`オプションでバックグラウンド起動
 
 ### 起動確認
 ```
@@ -73,6 +74,28 @@ curl https://localweb.test -k
 ### docker-compose.ymlの停止
 ```
 sudo docker-compose down
+```
+
+## https-portalについて
+
+- https://github.com/SteveLTN/https-portal
+- SSL証明書の生成・更新やLet's Encryptへの登録を自動で行う
+
+### STAGEの設定
+
+```
+STAGE: local        # 内部のみ & 自己証明書を利用
+DOMAINS: "localweb.test -> http://nginx:80"     # 左側にFQDN設定 (hostsファイルの変更が必要)
+```
+
+```
+STAGE: staging      # 自己証明書
+DOMAINS: "www.example.com -> http://nginx:80"   # 左側にFQDN設定 (ドメインの取得が必要)
+```
+
+```
+STAGE: production   # Let's Encryptに証明書登録
+DOMAINS: "www.example.com -> http://nginx:80"   # 左側にFQDN設定 (ドメインの取得が必要)
 ```
 
 ## 参考サイト

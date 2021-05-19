@@ -10,6 +10,8 @@ services:
         links:          # コンテナ内の /etc/hosts に追加
             - page1
             - page2
+        # ports:          # 左の番号のポートで外部からhttp接続可能
+        #     - "8080:80"
         expose:         # リンクされたサービスのみアクセス可能なポート
             - "80"
         volumes:
@@ -39,8 +41,8 @@ services:
             - nginx
         restart: always
         environment:
-            STAGE: staging
-            DOMAINS: "www.iyokana.com -> http://nginx:80"
+            STAGE: local
+            DOMAINS: "localweb.test -> http://nginx:80"
             # FORCE_RENEW: "true"     # 証明書の強制更新
         volumes: 
             - ./https-portal-data:/var/lib/https-portal
