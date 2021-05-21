@@ -111,3 +111,6 @@ DOMAINS: "www.example.com -> http://nginx:80"   # 左側にFQDN設定 (ドメイ
 - [remote_addrとかx-forwarded-forとかx-real-ipとか](https://christina04.hatenablog.com/entry/2016/10/25/190000)
 - [実践編ーDockerを使ってnginxでリバースプロキシを立ててみる](https://qiita.com/zawawahoge/items/d58ab6b746625e8d4457)
 - [dockerでnginx を使ってリバースプロキシをたてる](https://karuta-kayituka.hatenablog.com/entry/2019/06/30/221301)
+- [【簡単】docker-composeを使ってreactの開発環境を構築する【docker入門⑨】](https://engineer-ninaritai.com/docker-react/)
+
+sudo docker-compose run --rm node sh -c "npm install -g create-react-app && create-react-app reactapp"

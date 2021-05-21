@@ -3,16 +3,18 @@ version: "3"
 services:
 
     nginx:
-        image: nginx
+        image: nginx    # 起動するイメージ名
         depends_on:     # 依存するコンテナの後に起動
             - page1
             - page2
         links:          # コンテナ内の /etc/hosts に追加
             - page1
             - page2
-        expose:         # リンクされたサービスのみアクセス可能なポート
-            - "80"
-        volumes:
+        ports:          # 左の番号のポートで外部からhttp接続可能
+            - "8080:80"
+        # expose:         # リンクされたサービスのみアクセス可能なポート
+        #     - "80"
+        volumes:        # 左のホストディレクトリを右のコンテナ内ディレクトリとしてマウント
             - ./reverse-proxy/conf.d:/etc/nginx/conf.d
             - ./reverse-proxy/html:/etc/nginx/html
 
@@ -21,7 +23,9 @@ services:
         expose:
             - "80"
         volumes:
-            - ./nginx1/html:/usr/share/nginx/html
+            - ./nginx1-proxy/conf.d:/etc/nginx/conf.d
+            - ./react/app/reactapp/build:/usr/share/nginx/html
+            # - ./nginx1/html:/usr/share/nginx/html
 
     page2:
         image: nginx
@@ -30,17 +34,31 @@ services:
         volumes:
             - ./nginx2/html:/usr/share/nginx/html
 
-    https-portal:
-        image: steveltn/https-portal:1
-        ports:
-            - "80:80"
-            - "443:443"
-        links:
-            - nginx
-        restart: always
-        environment:
-            STAGE: staging
-            DOMAINS: "www.iyokana.com -> http://nginx:80"
-            # FORCE_RENEW: "true"     # 証明書の強制更新
-        volumes: 
-            - ./https-portal-data:/var/lib/https-portal
+    # https-portal:
+    #     image: steveltn/https-portal:1
+    #     ports:
+    #         - "80:80"
+    #         - "443:443"
+    #     links:
+    #         - nginx
+    #     restart: always
+    #     environment:
+    #         # STAGE: local
+    #         # DOMAINS: "localweb.test -> http://nginx:80"
+    #         STAGE: staging
+    #         DOMAINS: "www.iyokana.com -> http://nginx:80"
+    #         # FORCE_RENEW: "true"     # 証明書の強制更新
+    #     volumes: 
+    #         - ./https-portal-data:/var/lib/https-portal
+
+    # node:
+    #     image: node:14.13.1
+    #     # tty: true       # ポート待ち受けをしていないコンテナを起動し続ける
+    #     ports:
+    #         - "3000:3000"
+    #     environment:
+    #         - NODE_ENV=development
+    #     working_dir: /usr/src/app
+    #     volumes:
+    #         - ./react/app:/usr/src/app
+    #     command: sh -c "cd reactapp && npm run build"

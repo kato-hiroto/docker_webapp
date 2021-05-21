@@ -1,2 +1,5 @@
 /thinks/
+/package/
 https-portal-data/
+# node_modules/
+# build/

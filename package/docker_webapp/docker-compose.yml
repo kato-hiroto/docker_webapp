@@ -3,7 +3,7 @@ version: "3"
 services:
 
     nginx:
-        image: nginx
+        image: nginx    # 起動するイメージ名
         depends_on:     # 依存するコンテナの後に起動
             - page1
             - page2
@@ -14,7 +14,7 @@ services:
         #     - "8080:80"
         expose:         # リンクされたサービスのみアクセス可能なポート
             - "80"
-        volumes:
+        volumes:        # 左のホストディレクトリを右のコンテナ内ディレクトリとしてマウント
             - ./reverse-proxy/conf.d:/etc/nginx/conf.d
             - ./reverse-proxy/html:/etc/nginx/html
 
@@ -43,6 +43,8 @@ services:
         environment:
             STAGE: local
             DOMAINS: "localweb.test -> http://nginx:80"
+            # STAGE: staging
+            # DOMAINS: "www.iyokana.com -> http://nginx:80"
             # FORCE_RENEW: "true"     # 証明書の強制更新
         volumes: 
             - ./https-portal-data:/var/lib/https-portal
